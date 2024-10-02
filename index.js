@@ -19,7 +19,7 @@ app.post('/merge', upload.array('pdfs', 2), async (req, res, next) => {
   try {
     console.log(req.files);
     await merged_pdfs(path.join(__dirname, req.files[0].path), path.join(__dirname, req.files[1].path));
-    res.redirect("http://localhost:3000/static/merged.pdf");
+    res.redirect("/static/merged.pdf");
   } catch (error) {
     console.error('Error merging PDFs:', error);
     res.status(500).send('An error occurred while merging PDFs.');
