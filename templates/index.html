@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Merger</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .showreq {
+            position: absolute;
+            top: -10px;
+            background-color: rgba(236, 236, 34, 0.801);
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 5px;
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <header>
+       <div class="headbox">
+            <h2>PDF Merger</h2>
+       </div>
+       <div class="headbox" id="box2">
+            <span>The Simplest PDF merger tool</span>
+       </div>
+    </header>
+    <main>
+        <div class="select-box1">
+            <p>Select PDF files you want to merge ⬇</p>
+        </div>
+        <form action="/merge" method="post" enctype="multipart/form-data" id="pdfForm">
+            <div id="input">
+                <input type="file" class="form-control" name="pdfs" id="pdfs" multiple accept=".pdf">
+            </div>
+            <div class="showreq">
+                <p>❕ Please select exactly two PDF files.</p>
+            </div>
+            <input type="submit" value="Submit" class="btn">
+        </form>
+    </main>
+    <footer>
+        <h4>Made with 💗 by Farhana</h4>
+    </footer>
+    
+    <script>
+        document.getElementById('pdfForm').addEventListener('submit', function(event) {
+            const files = document.getElementById('pdfs').files;
+            const messageDiv = document.querySelector('.showreq');
+            
+            if (files.length !== 2) {
+                event.preventDefault();
+                messageDiv.style.opacity = '1'; // Show the message
+            } else {
+                messageDiv.style.opacity = '0'; // Hide the message if validation passes
+            }
+        });
+    </script>
+</body>
+</html>
