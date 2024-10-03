@@ -10,12 +10,15 @@ const app = express();
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-app.use('/static', express.static('public'));
+// app.use('/static', express.static('public'));
+
 const port = 3000;
 
 // Fix for __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+app.use('/static', express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
