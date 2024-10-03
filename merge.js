@@ -2,14 +2,12 @@
 const PDFMerger = async () => (await import('pdf-merger-js')).default;
 const path = require('path');
 
-const merged_pdfs = async (p1, p2) => {
-
+const merged_pdfs = async (buffer1, buffer2) => {
   try {
-    const merger = new (await PDFMerger())();
-
-    await merger.add(p1);
-
-    await merger.add(p2);
+    // const merger = new (await PDFMerger())();
+    const merger = new PDFMerger();
+    await merger.add(buffer1);
+    await merger.add(buffer2);
 
     await merger.save(path.join(__dirname, 'public/merged.pdf')); // save under given name and reset the internal document
 
