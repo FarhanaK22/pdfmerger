@@ -6,6 +6,14 @@
     <title>PDF Merger</title>
     <link rel="stylesheet" href="/static/style.css">
     <style>
+        .showerror{
+            background-color: rgba(248, 153, 64, 0.801);
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 5px;
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.3s ease;
+        }
         .showreq {
             position: absolute;
             top: -10px;
@@ -40,23 +48,41 @@
             </div>
             <input type="submit" value="Submit" class="btn">
         </form>
+        <div class="showerror">
+        <p>🛑'Uploaded files must be PDFs.'</p>
+    </div>
+    </div>
     </main>
     <footer>
         <h4>Made with 💗 by Farhana</h4>
     </footer>
     
     <script>
-        document.getElementById('pdfForm').addEventListener('submit', function(event) {
-            const files = document.getElementById('pdfs').files;
-            const messageDiv = document.querySelector('.showreq');
-            
-            if (files.length !== 2) {
-                event.preventDefault();
-                messageDiv.style.opacity = '1'; // Show the message
-            } else {
-                messageDiv.style.opacity = '0'; // Hide the message if validation passes
-            }
-        });
+    document.getElementById('pdfForm').addEventListener('submit', function(event) {
+    const files = document.getElementById('pdfs').files;
+    const messageDiv = document.querySelector('.showreq');
+    const errorDiv = document.querySelector('.showerror');
+
+    // Reset messages
+    messageDiv.style.opacity = '0';
+    errorDiv.style.opacity = '0';
+
+    // Check if exactly two files are uploaded
+    if (files.length !== 2) {
+        event.preventDefault();
+        messageDiv.style.opacity = '1'; // Show the message
+        return;
+    }
+
+    // Check if all files are PDFs
+    Array.from(files).forEach(file => {
+        if (file.type !== 'application/pdf') {
+            event.preventDefault();
+            errorDiv.style.opacity = '1'; // Show the error message
+            return;
+        }
+    });
+});
     </script>
 </body>
 </html>
